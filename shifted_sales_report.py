@@ -39,7 +39,7 @@ def extract_columns(row):
         'source': '',
         'buy_date': '',
         'list_date': '',
-        'sold_date': row[53],
+        'sold_date': row[52],
         'ship_date': row[57],
         'arrive_date': row[63],
         'weight': '?',
