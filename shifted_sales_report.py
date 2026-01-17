@@ -12,7 +12,7 @@ parser.add_argument("-o", "--output", dest="output_file",
     default='/tmp/sales_order_columns_extracted.csv',
     help="Output location of reformatted CSV (default: %(default)s)")
 parser.add_argument("-d", "--delimit", dest="delimiter",
-    default="\t",
+    default="tab",
     help="Delimiter character (default: %(default)s)")
 args = parser.parse_args()
 
@@ -53,6 +53,13 @@ def extract_columns(row):
     return columns
 
 
+def convert_delimiter(key):
+    if key == 'tab':
+        return "\t"
+    else:
+        return ","
+
+
 try:
     with open(args.input_file) as csv_file:
         csv_reader = csv.reader(csv_file)
@@ -70,6 +77,7 @@ except FileNotFoundError:
 if wanted_columns:
     wanted_columns.sort(key=operator.itemgetter("sold_date"))
     sales_order = ''
+    delimiter = convert_delimiter(args.delimiter)
 
     if Path(args.output_file).is_file():
         os.remove(args.output_file)
@@ -78,27 +86,27 @@ if wanted_columns:
         csv_out = csv.writer(output_file_location)
 
         for sales_data in wanted_columns:
-            sales_order += sales_data['item']+args.delimiter\
-                +str(sales_data['cost'])+args.delimiter\
-                +str(sales_data['returns'])+args.delimiter\
-                +sales_data['ask']+args.delimiter\
-                +str(sales_data['sold'])+args.delimiter\
-                +str(sales_data['tax'])+args.delimiter\
-                +str(sales_data['shipping'])+args.delimiter\
-                +sales_data['free_ship']+args.delimiter\
-                +sales_data['fvf']+args.delimiter\
-                +sales_data['promo']+args.delimiter\
-                +sales_data['inter']+args.delimiter\
-                +sales_data['profit']+args.delimiter\
-                +sales_data['source']+args.delimiter\
-                +sales_data['buy_date']+args.delimiter\
-                +sales_data['list_date']+args.delimiter\
-                +sales_data['sold_date']+args.delimiter\
-                +sales_data['ship_date']+args.delimiter\
-                +sales_data['arrive_date']+args.delimiter\
-                +sales_data['weight']+args.delimiter\
-                +sales_data['ship_state']+args.delimiter\
-                +sales_data['notes']+args.delimiter\
+            sales_order += sales_data['item']+delimiter\
+                +str(sales_data['cost'])+delimiter\
+                +str(sales_data['returns'])+delimiter\
+                +sales_data['ask']+delimiter\
+                +str(sales_data['sold'])+delimiter\
+                +str(sales_data['tax'])+delimiter\
+                +str(sales_data['shipping'])+delimiter\
+                +sales_data['free_ship']+delimiter\
+                +sales_data['fvf']+delimiter\
+                +sales_data['promo']+delimiter\
+                +sales_data['inter']+delimiter\
+                +sales_data['profit']+delimiter\
+                +sales_data['source']+delimiter\
+                +sales_data['buy_date']+delimiter\
+                +sales_data['list_date']+delimiter\
+                +sales_data['sold_date']+delimiter\
+                +sales_data['ship_date']+delimiter\
+                +sales_data['arrive_date']+delimiter\
+                +sales_data['weight']+delimiter\
+                +sales_data['ship_state']+delimiter\
+                +sales_data['notes']+delimiter\
                 +'e'\
                 +"\n"
 
