@@ -1,4 +1,4 @@
-# Reformat Sales Orders
+# Shifted Sales Report
 
 Given a CSV export of Sales Orders from eBay, extract only the
 columns I care about tracking.
